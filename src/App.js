@@ -7,6 +7,7 @@ import {
   Button,
   Box,
 } from '@chakra-ui/react';
+import jsonp from 'jsonp';
 
 function App() {
   const [email, setEmail] = useState('');
@@ -15,7 +16,11 @@ function App() {
   const onSubmit = e => {
     e.preventDefault();
     setLoading(true);
-    setLoading(false);
+    const url = 'your-mailchimp-url'; // you can use .env file to replace this
+    jsonp(`${url}&EMAIL=${email}`, { param: 'c' }, (_, { msg }) => {
+      alert(msg);
+      setLoading(false);
+    });
   };
 
   return (
